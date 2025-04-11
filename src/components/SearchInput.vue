@@ -79,7 +79,6 @@ export default {
 
 <template>
   <SearchBackground class="mb-12.5 mt-50" />
-  {{ API_KEY }}
   <p class="text-white text-center font-bold text-xl mb-5">Search by movie name:</p>
   <div
     class="relative flex items-center w-full max-w-sm border border-(--color-border) focus-within:border-white rounded-xl h-10">
