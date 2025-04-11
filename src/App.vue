@@ -1,47 +1,32 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import NavBar from './components/NavBar.vue';
+import Arrow from './components/icons/ArrowIcon.vue';
+import NotificationIcon from './components/icons/NotificationIcon.vue';
+import SearchWrapper from './components/SearchWrapper.vue';
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <NavBar>
+      <template #heading>
+        <span class="text-white font-bold">Concealed</span>
+        <span class="text-red-600 ml-3">Films</span>
+      </template>
+      <div class="flex items-center">
+        <NotificationIcon />
+        <div class="flex items-center">
+          <!-- This should be a dropdown for profile pages / settings -->
+          <div>
+            <img class="w-8 h-8 rounded mr-2 object-cover" src="./assets/images/profile-picture.jpg" alt="JG">
+          </div>
+          <Arrow />
+        </div>
+      </div>
+    </NavBar>
   </header>
 
-  <main>
-    <TheWelcome />
+  <main class="w-full flex flex-col items-center min-h-screen">
+    <SearchWrapper />
   </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
