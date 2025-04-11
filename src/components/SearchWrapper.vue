@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     setMovieList(list, term) {
-      this.movieList = list.results
+      this.movieList = list
       this.searchTerm = term
       this.renderList = true
     }

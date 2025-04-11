@@ -3,7 +3,9 @@ import SearchBackground from './SearchBackground.vue';
 import SearchIcon from './icons/SearchIcon.vue';
 import axios from 'axios';
 
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const MOVIE_API_URL = `https://api.themoviedb.org/3/search/movie?`;
+const DETAIL_API_URL = `https://api.themoviedb.org/3/movie/`;
 
 export default {
   name: 'SearchInput',
@@ -20,33 +22,64 @@ export default {
   props: {},
   methods: {
     async getMovieList() {
-      console.log(this.searchTerm)
-
       const options = {
         method: 'GET',
         url: MOVIE_API_URL,
         params: { query: this.searchTerm, include_adult: 'false', language: 'en-US', page: '1' },
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzlhMjZiY2NiZTJiZjk2MzY3MDQ0NmYzMjhiYTc4YiIsIm5iZiI6MTc0NDE1ODI3NC42NTYsInN1YiI6IjY3ZjViZTQyNzAxYjc1YmZlOWFkMTVkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0zPLE3VBdY4YjO11QugJhyLEVqm4Qn5NyJaoc6voEBg'
+          Authorization: API_KEY
         }
       };
+      let initialList = []
 
       try {
         const response = await axios.request(options)
-        this.searchResults = response.data
-        this.$emit('search-results-found', this.searchResults, this.searchTerm);
-        console.log(this.searchResults)
+        initialList = response.data;
       } catch (error) {
         console.error('Error popular movies:', error);
       }
+
+      if (initialList && initialList.results) {
+        for (const movie of initialList.results) {
+          const movieDetails = await this.getMovieDetails(movie.id)
+          if (movieDetails) {
+            this.searchResults.push(movieDetails);
+          }
+        }
+
+        this.$emit('search-results-found', this.searchResults, this.searchTerm)
+      }
     },
+    async getMovieDetails(id) {
+      const options = {
+        method: 'GET',
+        url: `${DETAIL_API_URL}${id}`,
+        params: { language: 'en-US' },
+        headers: {
+          accept: 'application/json',
+          Authorization: API_KEY
+        }
+      };
+
+      let details = {}
+
+      try {
+        const response = await axios.request(options)
+        details = response.data
+      } catch (error) {
+        console.error('Error popular movies:', error);
+      }
+
+      return details
+    }
   },
 };
 </script>
 
 <template>
   <SearchBackground class="mb-12.5 mt-50" />
+  {{ API_KEY }}
   <p class="text-white text-center font-bold text-xl mb-5">Search by movie name:</p>
   <div
     class="relative flex items-center w-full max-w-sm border border-(--color-border) focus-within:border-white rounded-xl h-10">
