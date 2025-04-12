@@ -19,7 +19,12 @@ export default {
     SearchBackground,
     SearchIcon
   },
-  props: {},
+  props: {
+    hasBackground: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     async getMovieList() {
       const options = {
@@ -78,8 +83,10 @@ export default {
 </script>
 
 <template>
-  <SearchBackground class="mb-12.5 mt-50" />
-  <p class="text-white text-center font-bold text-xl mb-5">Search by movie name:</p>
+  <template v-if="hasBackground">
+    <SearchBackground class="mb-12.5 mt-50" />
+    <p class="text-white text-center font-bold text-xl mb-5">Search by movie name:</p>
+  </template>
   <div
     class="relative flex items-center w-full max-w-sm border border-(--color-border) focus-within:border-white rounded-xl h-10">
     <form @submit.prevent="getMovieList" class="w-full h-full pl-9 flex items-center">

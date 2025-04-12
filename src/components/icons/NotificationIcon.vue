@@ -1,5 +1,5 @@
 <template>
-  <svg class="mr-6.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="mx-6.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="notification" clip-path="url(#clip0_14_398)">
       <g id="Page-1">
         <path id="notification_2"

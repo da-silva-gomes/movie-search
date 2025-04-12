@@ -20,6 +20,7 @@ export default {
       this.movieList = list
       this.searchTerm = term
       this.renderList = true
+      this.$emit('list-rendered', this.renderList)
     }
   }
 }
